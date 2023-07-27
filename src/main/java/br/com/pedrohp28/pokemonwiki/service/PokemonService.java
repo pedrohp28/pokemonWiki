@@ -2,8 +2,10 @@ package br.com.pedrohp28.pokemonwiki.service;
 
 import br.com.pedrohp28.pokemonwiki.controller.PokemonController;
 import br.com.pedrohp28.pokemonwiki.data.vo.PokemonVO;
+import br.com.pedrohp28.pokemonwiki.exceptions.RequiredObjectIsNullException;
 import br.com.pedrohp28.pokemonwiki.exceptions.ResourceNotFoundException;
 import br.com.pedrohp28.pokemonwiki.mapper.EntityMapper;
+import br.com.pedrohp28.pokemonwiki.model.Pokemon;
 import br.com.pedrohp28.pokemonwiki.repositories.PokemonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -46,5 +48,15 @@ public class PokemonService {
 
         Link link = linkTo(methodOn(PokemonController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc")).withSelfRel();
         return assembler.toModel(personVosPage, link);
+    }
+
+    public PokemonVO create(PokemonVO pokemon) {
+        if (pokemon == null) throw new RequiredObjectIsNullException();
+
+        logger.info("Criando um pokemon");
+        var entity = EntityMapper.parseObject(pokemon, Pokemon.class);
+        var vo = EntityMapper.parseObject(repository.save(entity), PokemonVO.class);
+        vo.add(linkTo(methodOn(PokemonController.class).findById(vo.getKey())).withSelfRel());
+        return vo;
     }
 }
