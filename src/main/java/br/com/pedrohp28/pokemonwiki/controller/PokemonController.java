@@ -21,7 +21,7 @@ import org.springframework.data.domain.Sort.*;
 
 @RestController
 @RequestMapping("/api/pokemon/v1")
-@Tag(name = "Pekemon", description = "Endpoints para gerenciar os Pokemon")
+@Tag(name = "Pokemon", description = "Endpoints para gerenciar os Pokemon")
 public class PokemonController {
 
     @Autowired
@@ -29,7 +29,6 @@ public class PokemonController {
 
     @GetMapping(value = "{id}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Procurar um Pokemon",description = "Informe o Id de pokemon e retornará suas informações",
-            tags = {"Pokemon"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
                             content = @Content(schema = @Schema(implementation = PokemonVO.class))
@@ -46,7 +45,6 @@ public class PokemonController {
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Encontre todos os pokemon",description = "Acesse todas as informações dos pokemons cadastrados",
-            tags = {"Pokemon"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
                             content = {
@@ -73,8 +71,7 @@ public class PokemonController {
     }
     @PostMapping(consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
                  produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
-    @Operation(summary = "Add a new Person",description = "Add a new Person",
-            tags = {"People"},
+    @Operation(summary = "Adicione um novo pokemon",description = "adicione um novo pokemon informando seus dados",
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
                             content = @Content(schema = @Schema(implementation = PokemonVO.class))
