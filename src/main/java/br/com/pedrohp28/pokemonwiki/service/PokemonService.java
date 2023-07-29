@@ -59,4 +59,31 @@ public class PokemonService {
         vo.add(linkTo(methodOn(PokemonController.class).findById(vo.getKey())).withSelfRel());
         return vo;
     }
+
+    public PokemonVO update(PokemonVO pokemon) {
+        if (pokemon == null) throw new RequiredObjectIsNullException();
+
+        logger.info("Atualizando o pokemon!");
+        Pokemon entity = repository.findById(pokemon.getKey()).orElseThrow(() -> new ResourceNotFoundException("Nenhum registro encontrado com esse ID"));
+
+        entity.setName(pokemon.getName());
+        entity.setDescription(pokemon.getDescription());
+        entity.setType(pokemon.getType());
+        entity.setHp(pokemon.getHp());
+        entity.setAttack(pokemon.getAttack());
+        entity.setDefense(pokemon.getDefense());
+        entity.setSpAttack(pokemon.getSpAttack());
+        entity.setSpDefense(pokemon.getSpDefense());
+        entity.setSpeed(pokemon.getSpeed());
+
+        PokemonVO vo = EntityMapper.parseObject(repository.save(entity),PokemonVO.class);
+        vo.add(linkTo(methodOn(PokemonController.class).findById(vo.getKey())).withSelfRel());
+        return vo;
+    }
+
+    public void delete(Long id) {
+        logger.info("Deletando um pokemon!");
+        Pokemon entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Nenhum registro encontrado com esse ID"));
+        repository.delete(entity);
+    }
 }
