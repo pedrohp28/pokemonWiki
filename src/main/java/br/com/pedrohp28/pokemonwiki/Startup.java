@@ -1,5 +1,7 @@
 package br.com.pedrohp28.pokemonwiki;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
@@ -9,6 +11,7 @@ import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+@OpenAPIDefinition(servers = { @Server(url = "/", description = "Default Server URL")})
 @SpringBootApplication
 public class Startup {
 
