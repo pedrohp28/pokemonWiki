@@ -9,16 +9,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Authentication", description = "autenticação da api para acessar as funçõpes")
 @RestController
 @RequestMapping("api/auth")
+@Tag(name = "Authentication", description = "autenticação da api para acessar as funçõpes")
 public class AuthController {
 
     @Autowired
-    AuthServices authServices;
+    private AuthServices authServices;
 
     @SuppressWarnings("rawtypes")
-    @Operation(summary = "Authenticates a user and returns a token")
+    @Operation(summary = "Autenticação de Usúario", description = "Insira seu usúario e acesse o token")
     @PostMapping(value = "/signin")
     public ResponseEntity signin(@RequestBody AccountCredentialsVO data) {
         if (checkIfParamsIsNotNull(data))
@@ -29,7 +29,7 @@ public class AuthController {
     }
 
     @SuppressWarnings("rawtypes")
-    @Operation(summary = "Refresh token for authenticated user and returns a token")
+    @Operation(summary = "Atualize o token")
     @PutMapping(value = "/refresh/{username}")
     public ResponseEntity refreshToken(@PathVariable("username") String username,
                                        @RequestHeader("Authorization") String refreshToken) {
